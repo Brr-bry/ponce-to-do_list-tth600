@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+
+    <style>
+        body {
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form {
+            padding: 20px 10px 20px 10px;
+            background-color: bisque;
+            border-radius: 10px;
+            display: flex;
+            width: fit-content;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form input {
+            margin: 10px;
+        }
+
+        .form button {
+            justify-content: center;
+            margin-top: 10px;
+            width: 10vw;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #addBtn {
+            background-color: rgb(65, 201, 228);
+        }
+
+        #cancelBtn {
+            background-color: rgb(223, 28, 28);
+        }
+
+        #result {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Add New Task</h1>
+
+    <div class="form">
+        <h2>Task Details</h2>
+        <span id="result"></span>
+
+        <input type="text" id="title" placeholder="Enter title">
+        <input type="text" id="description" placeholder="Enter description">
+
+        <button id="addBtn">Add</button>
+        <button id="cancelBtn">Cancel</button>
+
+    </div>
+
+    <script>
+
+        const titleInput = document.getElementById('title');
+        const descriptionInput = document.getElementById('description');
+
+        const addBtn = document.getElementById('addBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        const result = document.getElementById('result');
+
+
+        addBtn.addEventListener('click', async () => {
+
+            const title = titleInput.value;
+            const description = descriptionInput.value;
+
+            const response = await fetch('/api/tasks', {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    title: title,
+                    description: description
+                })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+
+                result.textContent = data.message;
+
+                setTimeout(() => {
+                    window.location.href = "./view.html";
+                }, 1000);
+
+            } else {
+
+                result.textContent = data.message;
+
+            }
+
+        });
+
+
+        cancelBtn.addEventListener('click', () => {
+            window.location.href = "./index.html";
+        });
+
+    </script>
+
+</body>
+</html>

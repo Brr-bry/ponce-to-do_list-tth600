@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View List</title>
+</head>
+
+<style>
+    button{
+        border: none;
+        background-color: rgb(65, 201, 228);
+        margin: 10px;
+        padding: 5px 10px 5px 10px;
+        color: white;
+        border-radius: 10px;
+    }
+
+    button:hover{
+        transition-duration: .2s;
+        scale: 110%;
+    }
+
+    .completed {
+    background-color: green;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    }
+
+    .incomplete {
+        background-color: red;
+        color: white;
+        padding: 3px 8px;
+        border-radius: 5px;
+    }
+</style>
+<body>
+
+    <h1>My To-do List</h1>
+
+    <button id="backBtn">Back</button>
+    <button id="addBtn">Add New Task</button> <br>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Completed</th>
+            </tr>
+        </thead>
+
+        <tbody id="list">
+
+        </tbody>
+    </table>
+
+    <script>
+
+        const addBtn = document.getElementById('addBtn');
+        const backBtn = document.getElementById('backBtn');
+
+        addBtn.addEventListener('click', ()=>{
+            window.location.href = "./add.html"
+        })
+        
+        backBtn.addEventListener('click', ()=>{
+            window.location.href = "./index.html"
+        })
+
+        async function updateList() {
+
+            const response = await fetch('/api/tasks');
+
+            const tasks = await response.json();
+
+            const list = document.getElementById('list');
+
+            list.innerHTML = '';
+
+            tasks.forEach(task => {
+
+                list.innerHTML += `
+                    <tr>
+                        <td>${task.id}</td>
+                        <td>${task.title}</td>
+                        <td>${task.description}</td>
+                        <td>
+                            <span class="${task.completed ? 'completed' : 'incomplete'}">
+                                ${task.completed ? 'Completed' : 'Incomplete'}
+                            </span>
+                        </td>
+                    </tr>
+                `;
+
+            });
+        }
+
+        updateList();
+
+    </script>
+
+</body>
+</html>

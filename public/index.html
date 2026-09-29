@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponce To-do List</title>
+</head>
+
+<style>
+    button{
+        border: none;
+        background-color: rgb(65, 201, 228);
+        margin: 10px;
+        padding: 5px 10px 5px 10px;
+        color: white;
+        border-radius: 10px;
+    }
+
+    button:hover{
+        transition-duration: .2s;
+        scale: 110%;
+    }
+</style>
+<body>
+    <h1>Ponce To-do List</h1>
+
+    <button id="addBtn">Add New Task</button>
+    <button id="viewBtn">View List</button>
+
+    <script>
+        const addBtn = document.getElementById("addBtn");
+        const viewBtn = document.getElementById("viewBtn");
+
+        addBtn.addEventListener('click',() => {
+            window.location.href = './add.html';
+        })
+
+        viewBtn.addEventListener('click',() => {
+            window.location.href = './view.html';
+        })
+
+    </script>
+</body>
+</html>
